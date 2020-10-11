@@ -42,7 +42,7 @@ export const Posts = ({ fetchPosts, posts, isLoading }: Props) => {
           </>
         ) : (
           posts.map((item: PostType) => (
-            <PostsItem post={item} key={item.title} />
+            <PostsItem post={item} key={`${item.title} ${item.date}`} />
           ))
         )}
       </Grid>
