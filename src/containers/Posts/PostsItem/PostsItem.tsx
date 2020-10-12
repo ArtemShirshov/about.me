@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Box, Chip, Grid, Typography } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 import { MonthMap } from 'constants/MonthMap';
 
@@ -7,7 +8,12 @@ import { PostType } from '../Posts';
 import { PostsActionsConnected } from './PostActions';
 import { useStyles } from './PostItem.styled';
 
-export const PostsItem = ({ post }: { post: PostType }) => {
+interface PropsType {
+  post: PostType;
+  fetchPostWithCategory: () => void;
+}
+
+export const PostsItem = ({ post, fetchPostWithCategory }: PropsType) => {
   const classes = useStyles();
   const [isHoverPostsItem, setHover] = useState(false);
 
@@ -16,6 +22,10 @@ export const PostsItem = ({ post }: { post: PostType }) => {
 
     return `${d.getDate()} ${MonthMap[d.getMonth()]} ${d.getFullYear()}`;
   }, [post]);
+
+  const onClickCategory = useCallback(() => {
+    fetchPostWithCategory();
+  }, [fetchPostWithCategory]);
 
   return (
     <Grid
@@ -45,13 +55,18 @@ export const PostsItem = ({ post }: { post: PostType }) => {
           </Grid>
 
           {post.categories.map((item) => (
-            <Grid key={item.title} item>
-              <Chip
-                key={item.title}
-                label={item.title}
-                variant="outlined"
-                size="small"
-              />
+            <Grid key={`${item.title} ${post._id}`} item>
+              <Link
+                to={`/posts?category=${item._id}`}
+                onClick={onClickCategory}
+              >
+                <Chip
+                  key={item.title}
+                  label={item.title}
+                  variant="outlined"
+                  size="small"
+                />
+              </Link>
             </Grid>
           ))}
         </Grid>

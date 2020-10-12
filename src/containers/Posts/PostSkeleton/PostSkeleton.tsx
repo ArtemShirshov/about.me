@@ -11,15 +11,12 @@ export const PostSkeleton = () => (
     <Box mb={2}>
       <Grid container spacing={2}>
         <Grid item>
-          {' '}
           <Skeleton variant="text" width={100} />
         </Grid>
         <Grid item>
-          {' '}
           <Skeleton variant="text" width={100} />
         </Grid>
         <Grid item>
-          {' '}
           <Skeleton variant="text" width={100} />
         </Grid>
       </Grid>

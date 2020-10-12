@@ -1,5 +1,4 @@
-import { put, takeEvery } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
+import { takeEvery } from 'redux-saga/effects';
 import Cookies from 'js-cookie';
 
 import { sendLogin } from './Auth.reducer';
@@ -10,7 +9,7 @@ function* AuthSaga({
 }) {
   Cookies.set('Token', data.user.token);
 
-  yield put(push('/posts'));
+  window.location.href = '/posts';
 }
 
 export default function* watchActions() {

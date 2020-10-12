@@ -1,20 +1,22 @@
 import { createActions, handleActions } from 'redux-actions';
 
-export const { fetchPosts, deletePost } = createActions(
+export const { fetchPosts, deletePost, startPostsSaga }: any = createActions(
   {
-    FETCH_POSTS: (payload) => ({
+    FETCH_POSTS: ({ category }) => ({
       request: {
         url: '/posts',
         method: 'GET',
+        params: { category },
       },
     }),
-    DELETE_POST: (payload) => ({
+    DELETE_POST: (id) => ({
       request: {
         url: '/post',
         method: 'DELETE',
-        params: { id: payload },
+        params: { id },
       },
     }),
+    START_POSTS_SAGA: (payload) => payload,
   },
   {
     prefix: 'POSTS',
@@ -23,15 +25,14 @@ export const { fetchPosts, deletePost } = createActions(
 
 export const Posts = handleActions(
   {
-    [`${fetchPosts}_SUCCESS`]: (state, { payload }) => ({
+    [`${fetchPosts}_SUCCESS`]: (state, { payload }: any) => ({
       ...state,
-      // @ts-ignore
       data: payload.data,
       loading: false,
     }),
-    // @ts-ignore
     [fetchPosts]: (state) => ({
       ...state,
+      data: [],
       loading: true,
     }),
   },

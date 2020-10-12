@@ -8,6 +8,7 @@ import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
 import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAltOutlined';
 import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 
+import { Wrapper } from 'components/Wrapper/Wrapper';
 import { onChangeForm } from 'utils/formUtils';
 import { PageHeader } from 'components/PageHeader/PageHeader';
 import { PageSetting } from 'components/PageSetting/PageSetting';
@@ -78,43 +79,45 @@ const NewFeels = ({
       <PageSetting title="How do you feel?" />
       <PageHeader title="How do you feel?" />
 
-      <Grid container spacing={4} direction="column">
-        <Grid item>
-          <Rating
-            size="large"
-            value={ratingValue}
-            onChange={(event, newValue) => {
-              setRatingValue(newValue);
-            }}
-            getLabelText={(value) => customIcons[value].label}
-            IconContainerComponent={IconContainer}
-          />
-        </Grid>
+      <Wrapper>
+        <Grid container spacing={4} direction="column">
+          <Grid item>
+            <Rating
+              size="large"
+              value={ratingValue}
+              onChange={(event, newValue) => {
+                setRatingValue(newValue);
+              }}
+              getLabelText={(value) => customIcons[value].label}
+              IconContainerComponent={IconContainer}
+            />
+          </Grid>
 
-        <Grid item>
-          <TextField
-            label="Text"
-            name="text"
-            variant="outlined"
-            rows={10}
-            onChange={onChangeField}
-            value={form.text}
-            multiline
-            fullWidth
-          />
-        </Grid>
+          <Grid item>
+            <TextField
+              label="Text"
+              name="text"
+              variant="outlined"
+              rows={10}
+              onChange={onChangeField}
+              value={form.text}
+              multiline
+              fullWidth
+            />
+          </Grid>
 
-        <Grid item>
-          <Button
-            onClick={onSubmit}
-            variant="contained"
-            color="primary"
-            disabled={isLoading}
-          >
-            Add
-          </Button>
+          <Grid item>
+            <Button
+              onClick={onSubmit}
+              variant="contained"
+              color="primary"
+              disabled={isLoading}
+            >
+              Add
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
+      </Wrapper>
     </>
   );
 };

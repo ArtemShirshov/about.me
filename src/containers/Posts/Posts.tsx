@@ -1,32 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core';
+import queryString from 'query-string';
 
 import { PageHeader } from 'components/PageHeader/PageHeader';
 import { PageSetting } from 'components/PageSetting/PageSetting';
 
 import { PostSkeleton } from './PostSkeleton/PostSkeleton';
 import { PostsItem } from './PostsItem/PostsItem';
-import { fetchPosts } from './ducks/Posts.reducer';
+import { startPostsSaga } from './ducks/Posts.reducer';
 
 export interface PostType {
   _id: number;
   date: number;
   title: string;
   text: string;
-  categories: [{ title: string }];
+  categories: [{ title: string, _id: string }];
 }
 
 interface Props {
-  fetchPosts: Function;
+  startPostsSaga: (arg?: { category: string[] | string | null }) => void;
   posts: [PostType];
   isLoading: boolean;
 }
 
-export const Posts = ({ fetchPosts, posts, isLoading }: Props) => {
+export const Posts = ({ startPostsSaga, posts, isLoading }: Props) => {
+  const fetchPostWithCategory = useCallback(() => {
+    const { category } = queryString.parse(window.location.search);
+    startPostsSaga({ category });
+  }, [startPostsSaga, window.location.search]);
+
   useEffect(() => {
-    fetchPosts();
-  }, [fetchPosts]);
+    fetchPostWithCategory();
+  }, [fetchPostWithCategory]);
 
   return (
     <div>
@@ -42,7 +48,11 @@ export const Posts = ({ fetchPosts, posts, isLoading }: Props) => {
           </>
         ) : (
           posts.map((item: PostType) => (
-            <PostsItem post={item} key={`${item.title} ${item.date}`} />
+            <PostsItem
+              post={item}
+              key={`${item.title} ${item.date}`}
+              fetchPostWithCategory={fetchPostWithCategory}
+            />
           ))
         )}
       </Grid>
@@ -55,7 +65,7 @@ const mapStateToProps = (state) => ({
   posts: state.Posts.data,
   isLoading: state.Posts.loading,
 });
-const mapDispatchToProps = { fetchPosts };
+const mapDispatchToProps = { startPostsSaga };
 
 export const PostsConnected = connect(
   mapStateToProps,

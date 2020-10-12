@@ -4,6 +4,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Button, Grid, TextField } from '@material-ui/core';
 import AddBox from '@material-ui/icons/AddBox';
 
+import { Wrapper } from 'components/Wrapper/Wrapper';
 import { onChangeForm } from 'utils/formUtils';
 import { PageHeader } from 'components/PageHeader/PageHeader';
 import { PageSetting } from 'components/PageSetting/PageSetting';
@@ -97,62 +98,68 @@ export const NewPost = ({
       <PageSetting title="Write, please" />
       <PageHeader title="Write, please" />
 
-      <Grid container spacing={4} direction="column">
-        <Grid item>
-          <Input
-            label="Title"
-            name="title"
-            onChange={onChangeField}
-            value={form.title}
-          />
-        </Grid>
+      <Wrapper>
+        <Grid container spacing={4} direction="column">
+          <Grid item>
+            <Input
+              label="Title"
+              name="title"
+              onChange={onChangeField}
+              value={form.title}
+            />
+          </Grid>
 
-        <Grid item>
-          <TextField
-            label="Text"
-            name="text"
-            variant="outlined"
-            rows={10}
-            onChange={onChangeField}
-            value={form.text}
-            multiline
-            fullWidth
-          />
-        </Grid>
+          <Grid item>
+            <TextField
+              label="Text"
+              name="text"
+              variant="outlined"
+              rows={10}
+              onChange={onChangeField}
+              value={form.text}
+              multiline
+              fullWidth
+            />
+          </Grid>
 
-        <Grid item>
-          <Grid container spacing={2} alignItems="center" justify="center">
-            <Grid item xs={11}>
-              <Autocomplete
-                multiple
-                id="tags-standard"
-                options={categories}
-                onChange={onChangeAutocomplete}
-                getOptionLabel={(option: { title: string }) => option.title}
-                renderInput={(params) => (
-                  <TextField {...params} variant="outlined" label="Категория" />
-                )}
-                loading={isLoadingPostData}
-                value={selectedCategories}
-              />
-            </Grid>
-            <Grid item xs={1}>
-              <AddBox onClick={onOpenNewCategoryDialog} />
+          <Grid item>
+            <Grid container spacing={2} alignItems="center" justify="center">
+              <Grid item xs={11}>
+                <Autocomplete
+                  multiple
+                  id="tags-standard"
+                  options={categories}
+                  onChange={onChangeAutocomplete}
+                  getOptionLabel={(option: { title: string }) => option.title}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Категория"
+                    />
+                  )}
+                  loading={isLoadingPostData}
+                  value={selectedCategories}
+                />
+              </Grid>
+              <Grid item xs={1}>
+                <AddBox onClick={onOpenNewCategoryDialog} />
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
 
-        <Grid item>
-          <Button
-            onClick={onSubmit}
-            variant="contained"
-            color="primary"
-            disabled={isLoading}
-          >
-            Добавить
-          </Button>
+          <Grid item>
+            <Button
+              onClick={onSubmit}
+              variant="contained"
+              color="primary"
+              disabled={isLoading}
+            >
+              Добавить
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
+      </Wrapper>
     </>
   );
 };

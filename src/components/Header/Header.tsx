@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Box, Grid } from '@material-ui/core';
+
+import { Link } from 'components/Header/Link/Link';
 
 export const Header = () => (
   <Box mt={4} mb={4}>
