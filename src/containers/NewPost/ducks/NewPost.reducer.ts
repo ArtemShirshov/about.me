@@ -1,18 +1,18 @@
-import { createActions, handleActions, combineActions } from 'redux-actions';
+import { combineActions, createActions, handleActions } from 'redux-actions';
 
 export const { fetchCategories, fetchPost, sendPost }: any = createActions(
   {
-    FETCH_CATEGORIES: (payload) => ({
+    FETCH_CATEGORIES: () => ({
       request: {
         url: '/category',
         method: 'GET',
       },
     }),
-    FETCH_POST: (payload) => ({
+    FETCH_POST: (id) => ({
       request: {
         url: '/post',
         method: 'GET',
-        params: { id: payload },
+        params: { id },
       },
     }),
     SEND_POST: (payload) => ({

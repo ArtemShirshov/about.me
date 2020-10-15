@@ -17,10 +17,10 @@ import { NewCategoryDialogConnected } from './NewCategoryDialog/NewCategoryDialo
 import {
   fetchCategories,
   fetchPost,
-  sendPost,
   getNewPostCategories,
   getNewPostLoading,
   getPost,
+  sendPost,
 } from './ducks';
 
 interface PropTypes {

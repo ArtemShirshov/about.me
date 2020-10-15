@@ -14,10 +14,10 @@ import { PageHeader } from 'components/PageHeader/PageHeader';
 import { PageSetting } from 'components/PageSetting/PageSetting';
 
 import {
+  fetchMemories,
   fetchMemoriesActivity,
   getLoading,
   sendFeels,
-  fetchMemories,
 } from './ducks';
 
 const customIcons = {

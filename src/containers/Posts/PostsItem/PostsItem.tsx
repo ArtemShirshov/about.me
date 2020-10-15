@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Box, Chip, Grid, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
@@ -59,12 +59,14 @@ export const PostsItem = ({ post, fetchPostWithCategory }: PropsType) => {
               <Link
                 to={`/posts?category=${item._id}`}
                 onClick={onClickCategory}
+                style={{ textDecoration: 'none' }}
               >
                 <Chip
                   key={item.title}
                   label={item.title}
                   variant="outlined"
                   size="small"
+                  style={{ cursor: 'pointer' }}
                 />
               </Link>
             </Grid>

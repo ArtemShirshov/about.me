@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { PageHeader } from 'components/PageHeader/PageHeader';
 import { PageSetting } from 'components/PageSetting/PageSetting';
 
-import { getLoading, getStatistic, fetchStatistic } from './ducks';
+import { fetchStatistic, getLoading, getStatistic } from './ducks';
 
 // eslint-disable-next-line react/prop-types
 // @ts-ignore

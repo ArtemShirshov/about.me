@@ -1,14 +1,19 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core';
-import queryString from 'query-string';
+import queryString, { ParsedQuery } from 'query-string';
 
 import { PageHeader } from 'components/PageHeader/PageHeader';
 import { PageSetting } from 'components/PageSetting/PageSetting';
 
 import { PostSkeleton } from './PostSkeleton/PostSkeleton';
 import { PostsItem } from './PostsItem/PostsItem';
-import { startPostsSaga } from './ducks/Posts.reducer';
+import {
+  startPostsSaga,
+  getPostsData,
+  getPostsLoading,
+  getCategoryTitle,
+} from './ducks';
 
 export interface PostType {
   _id: number;
@@ -19,16 +24,25 @@ export interface PostType {
 }
 
 interface Props {
-  startPostsSaga: (arg?: { category: string[] | string | null }) => void;
+  startPostsSaga: (arg?: ParsedQuery<string>) => void;
   posts: [PostType];
+  category: any;
   isLoading: boolean;
 }
 
-export const Posts = ({ startPostsSaga, posts, isLoading }: Props) => {
+export const Posts = ({
+  startPostsSaga,
+  posts,
+  category,
+  isLoading,
+}: Props) => {
+  const categoryParams = useMemo(() => {
+    return queryString.parse(window.location.search);
+  }, [window.location.search]);
+
   const fetchPostWithCategory = useCallback(() => {
-    const { category } = queryString.parse(window.location.search);
-    startPostsSaga({ category });
-  }, [startPostsSaga, window.location.search]);
+    startPostsSaga(categoryParams);
+  }, [startPostsSaga, categoryParams]);
 
   useEffect(() => {
     fetchPostWithCategory();
@@ -36,8 +50,8 @@ export const Posts = ({ startPostsSaga, posts, isLoading }: Props) => {
 
   return (
     <div>
-      <PageSetting title="Posts" />
-      <PageHeader title="Posts" />
+      <PageSetting title={`Posts / ${category}`} />
+      <PageHeader title="Posts" separatedTitle={category} />
 
       <Grid container direction="column">
         {isLoading ? (
@@ -62,8 +76,9 @@ export const Posts = ({ startPostsSaga, posts, isLoading }: Props) => {
 
 // @ts-ignore
 const mapStateToProps = (state) => ({
-  posts: state.Posts.data,
-  isLoading: state.Posts.loading,
+  category: getCategoryTitle(state),
+  posts: getPostsData(state),
+  isLoading: getPostsLoading(state),
 });
 const mapDispatchToProps = { startPostsSaga };
 

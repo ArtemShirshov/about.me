@@ -10,8 +10,8 @@ import { Input } from 'components/Fields/Input';
 import { onChangeForm } from 'utils/formUtils';
 
 import {
-  setOpenNewCategoryDialog,
   sendNewCategory,
+  setOpenNewCategoryDialog,
 } from './ducks/NewCategoryDialog.reducer';
 
 export interface PropTypes {
